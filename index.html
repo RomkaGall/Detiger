@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Halden — Fine watches</title>
+  <meta name="description" content="Halden is a private salon for pre-owned fine watches. Each piece is one of one, checked in Geneva, and sold with its condition stated plainly.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f3efe7;
+      --ink: #1a2330;
+      --muted: #6e675e;
+      --line: rgba(26, 35, 48, 0.14);
+      --brass: #8d7048;
+      --night: #17202c;
+      --cream: #f6f2ea;
+      --cool: #e4e7eb;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Manrope, sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    img { display: block; max-width: 100%; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--ink); color: var(--cream); }
+    :focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+    .notice {
+      background: var(--night);
+      color: var(--cream);
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 10px 16px;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      height: 68px;
+      padding: 0 32px;
+      background: rgba(243, 239, 231, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .logo {
+      font-family: "Instrument Serif", serif;
+      font-size: 28px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      justify-self: start;
+    }
+    .nav { display: flex; gap: 28px; }
+    .nav a, .tool, .filter, .house {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: none;
+      border: 0;
+      padding: 0;
+    }
+    .nav a { position: relative; padding-bottom: 4px; }
+    .nav a::after, .filter::after, .house::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 1px;
+      background: var(--ink);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .nav a:hover::after, .filter:hover::after, .house:hover::after,
+    .filter[aria-pressed="true"]::after, .house[aria-pressed="true"]::after { transform: scaleX(1); }
+    .tools { display: flex; justify-content: flex-end; align-items: center; gap: 22px; }
+    .clock { font-variant-numeric: tabular-nums; letter-spacing: 0.12em; font-size: 12px; color: var(--muted); }
+    .clock b { color: var(--brass); font-weight: 500; }
+    .bag-btn, .menu-btn {
+      background: none;
+      border: 0;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 12px;
+      padding: 6px 0;
+    }
+    .menu-btn { display: none; }
+    .count-n { font-family: "Instrument Serif", serif; font-size: 15px; margin-left: 4px; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.86fr) 1.14fr;
+      min-height: calc(100vh - 100px);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 48px 56px 56px;
+    }
+    .mark { width: 1px; height: 52px; background: var(--brass); margin-bottom: 28px; }
+    .eyebrow {
+      margin: 0 0 16px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    h1, h2, h3 { font-weight: 400; }
+    h1 {
+      margin: 0 0 24px;
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(48px, 4.5vw, 78px);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+    }
+    h1 em, .essay h2 em { font-style: italic; }
+    .deck { max-width: 38ch; margin: 0 0 28px; color: var(--ink); font-size: 16px; }
+    .facts { margin: 0 0 28px; font-size: 14px; }
+    .facts strong {
+      font-family: "Instrument Serif", serif;
+      font-size: 32px;
+      font-weight: 400;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .facts span { color: var(--muted); }
+    .actions { display: flex; align-items: center; gap: 28px; }
+    .btn {
+      background: var(--ink);
+      color: var(--cream);
+      border: 0;
+      padding: 15px 22px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    .btn:hover { background: #0e1520; }
+    .btn.light { background: var(--cream); color: var(--night); }
+    .btn.ghost {
+      background: transparent;
+      color: inherit;
+      border-bottom: 1px solid currentColor;
+      padding: 15px 0;
+    }
+    .hero-fig { position: relative; margin: 0; min-height: 560px; background: #14120f; }
+    .hero-fig::after, .essay-fig::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 96px;
+      background: linear-gradient(transparent, rgba(12, 10, 8, 0.55));
+      pointer-events: none;
+    }
+    .hero-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+    .hero-fig figcaption, .essay-fig figcaption {
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
+    }
+    .hero-fig figcaption {
+      position: absolute;
+      left: 22px; bottom: 18px;
+      color: #f3efe7;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .btn:disabled { opacity: 0.55; cursor: default; }
+    .houses {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 32px;
+      padding: 18px 40px;
+      border-bottom: 1px solid var(--line);
+    }
+    .house { position: relative; color: var(--muted); padding-bottom: 2px; }
+    .house[aria-pressed="true"] { color: var(--ink); }
+    .house i { font-style: normal; font-family: "Instrument Serif", serif; margin-left: 6px; color: var(--ink); }
+    .wrap { width: min(1440px, calc(100% - 80px)); margin: 0 auto; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      padding: 72px 0 18px;
+    }
+    h2 {
+      margin: 0;
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(40px, 4vw, 64px);
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+    }
+    .filters { display: flex; gap: 22px; padding-bottom: 8px; }
+    .filter { position: relative; color: var(--muted); padding-bottom: 4px; }
+    .filter[aria-pressed="true"] { color: var(--ink); }
+    .result-line {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+    .pieces {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr 1fr;
+      gap: 36px 22px;
+      padding-bottom: 80px;
+    }
+    .piece-open {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      background: none;
+      text-align: left;
+    }
+    .ph { overflow: hidden; background: #e6e1d8; aspect-ratio: 4 / 5; }
+    .feature { grid-row: span 2; }
+    .feature .ph { aspect-ratio: auto; flex: 1; min-height: 560px; }
+    .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+    .piece-open:hover .ph img { transform: scale(1.04); }
+    .meta { display: grid; grid-template-columns: 1fr auto; gap: 0 16px; padding-top: 14px; }
+    .brand, .spec { color: var(--muted); }
+    .brand { margin: 0; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+    .model {
+      margin: 2px 0 6px;
+      grid-column: 1;
+      font-family: "Instrument Serif", serif;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+    }
+    .price { margin: 0; font-family: "Instrument Serif", serif; font-size: 22px; }
+    .spec { grid-column: 1 / -1; margin: 0; font-size: 13px; }
+    .empty { grid-column: 1 / -1; padding: 48px 0 80px; color: var(--muted); }
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: var(--cool);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .principles article { padding: 48px 36px 56px; }
+    .principles article + article { border-left: 1px solid var(--line); }
+    .num {
+      display: block;
+      margin-bottom: 28px;
+      font-family: "Instrument Serif", serif;
+      letter-spacing: 0.14em;
+      color: var(--brass);
+    }
+    .principles h3 { margin: 0 0 12px; font-family: "Instrument Serif", serif; font-size: 32px; letter-spacing: -0.02em; }
+    .principles p { margin: 0; max-width: 36ch; color: #2a313b; }
+    .essay {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      min-height: 680px;
+      border-bottom: 1px solid var(--line);
+    }
+    .essay-copy { display: flex; flex-direction: column; justify-content: center; padding: 72px 64px; }
+    .essay h2 { margin-bottom: 20px; }
+    .essay p { max-width: 42ch; margin: 0 0 16px; }
+    .essay-fig { margin: 0; position: relative; background: #cfc8be; min-height: 420px; }
+    .essay-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% center; }
+    .essay-fig figcaption {
+      position: absolute; left: 20px; bottom: 16px;
+      color: #f3efe7; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    #bag-overlay { padding: 0; justify-items: end; align-items: stretch; }
+    #bag-overlay .drawer { height: 100%; }
+    #journal { padding-bottom: 24px; }
+    .journal-list { border-bottom: 1px solid var(--line); }
+    .entry {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 24px;
+      align-items: baseline;
+      width: 100%;
+      padding: 28px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+      background: none;
+      text-align: left;
+    }
+    .entry time { color: var(--muted); font-size: 13px; letter-spacing: 0.08em; }
+    .entry strong { font-family: "Instrument Serif", serif; font-size: 32px; font-weight: 400; letter-spacing: -0.02em; }
+    .entry em { font-style: normal; color: var(--muted); font-size: 18px; }
+    .viewing {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      background: var(--night);
+      color: var(--cream);
+      padding: 88px 64px;
+    }
+    .viewing h2 { color: var(--cream); }
+    .viewing .eyebrow { color: rgba(246, 242, 234, 0.62); }
+    .viewing p { max-width: 38ch; color: rgba(246, 242, 234, 0.86); }
+    form { display: grid; gap: 8px; align-content: start; }
+    label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(246, 242, 234, 0.62); margin-top: 12px; }
+    input, select, textarea {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid rgba(246, 242, 234, 0.35);
+      padding: 12px 0;
+      border-radius: 0;
+    }
+    textarea { min-height: 72px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { outline: none; border-bottom-color: var(--cream); }
+    select option { color: var(--ink); }
+    .thanks { font-family: "Instrument Serif", serif; font-size: 36px; line-height: 1.15; margin: 24px 0 0; }
+    footer { padding: 64px 0 32px; }
+    .foot {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 32px;
+      padding-bottom: 48px;
+    }
+    .foot .logo { font-size: 26px; }
+    .foot p { margin: 12px 0 0; color: var(--muted); max-width: 28ch; }
+    .foot h3 { margin: 8px 0 14px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; }
+    .foot a, .foot span { display: block; padding: 4px 0; color: var(--muted); }
+    .foot a:hover { color: var(--ink); }
+    .legal {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: rgba(23, 32, 44, 0.46);
+      display: grid;
+      place-items: center;
+      padding: 28px;
+    }
+    .overlay[hidden] { display: none; }
+    .sheet {
+      width: min(1080px, 100%);
+      max-height: min(860px, calc(100vh - 56px));
+      overflow: auto;
+      background: var(--paper);
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      position: relative;
+    }
+    .sheet.narrow { width: min(640px, 100%); grid-template-columns: 1fr; }
+    .sheet-photo { background: #14120f; min-height: 420px; position: relative; }
+    .sheet-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .sheet-body { padding: 36px 36px 32px; }
+    .close {
+      position: absolute;
+      top: 14px; right: 14px;
+      z-index: 2;
+      width: 40px; height: 40px;
+      border: 0;
+      background: var(--paper);
+      letter-spacing: 0.08em;
+    }
+    .sheet .model { font-size: 42px; margin: 6px 0 8px; }
+    .sheet .price { font-size: 32px; display: block; margin: 8px 0 18px; }
+    .one { letter-spacing: 0.16em; text-transform: uppercase; font-size: 11px; color: var(--brass); }
+    dl { display: grid; grid-template-columns: 140px 1fr; gap: 8px 12px; margin: 18px 0; font-size: 14px; }
+    dt { color: var(--muted); }
+    dd { margin: 0; }
+    .story { margin: 0 0 22px; }
+    .sheet-actions { display: flex; gap: 22px; align-items: center; }
+    .drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      z-index: 50;
+      width: min(420px, 100%);
+      background: var(--cream);
+      border-left: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      padding: 28px 28px 24px;
+    }
+    .drawer[hidden] { display: none; }
+    .drawer-head, .bag-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .drawer h2 { font-size: 40px; }
+    .bag-list { list-style: none; margin: 12px 0; padding: 0; flex: 1; overflow: auto; }
+    .bag-row { padding: 16px 0; border-top: 1px solid var(--line); }
+    .bag-row button { background: none; border: 0; color: var(--muted); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 0; }
+    .sub { display: flex; justify-content: space-between; padding: 16px 0; border-top: 1px solid var(--line); font-family: "Instrument Serif", serif; font-size: 28px; }
+    .fine { color: var(--muted); font-size: 13px; }
+    .mobile-nav {
+      display: none;
+      position: absolute;
+      top: 68px; left: 0; right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 24px 20px;
+    }
+    .mobile-nav a { display: block; padding: 12px 0; border-top: 1px solid var(--line); letter-spacing: 0.14em; text-transform: uppercase; font-size: 13px; }
+    .mobile-nav.open { display: block; }
+    @media (max-width: 980px) {
+      .nav { display: none; }
+      .menu-btn { display: inline; }
+      header { grid-template-columns: 1fr auto; }
+      .hero, .essay, .viewing, .principles, .foot { grid-template-columns: 1fr; }
+      .hero-fig { min-height: 72vw; order: -1; }
+      .hero-copy, .essay-copy, .viewing { padding: 36px 22px 42px; }
+      .pieces { grid-template-columns: 1fr 1fr; }
+      .feature { grid-column: 1 / -1; grid-row: auto; }
+      .feature .ph { min-height: 0; aspect-ratio: 4 / 5; }
+      .principles article + article { border-left: 0; border-top: 1px solid var(--line); }
+      .essay-fig { min-height: 360px; }
+      .essay-fig img { position: relative; height: 360px; }
+      .sheet { grid-template-columns: 1fr; }
+      .sheet-photo { min-height: 280px; }
+      .sheet-photo img { position: relative; height: 280px; }
+      .wrap { width: min(1440px, calc(100% - 40px)); }
+      .houses { padding: 16px 20px; }
+      .section-head { flex-direction: column; align-items: flex-start; padding-top: 48px; }
+      .entry { grid-template-columns: 1fr; gap: 6px; }
+      .entry strong { font-size: 26px; }
+      .foot { gap: 28px; }
+      .clock { display: none; }
+    }
+    @media (max-width: 640px) {
+      .pieces { grid-template-columns: 1fr; }
+      .actions, .sheet-actions { flex-direction: column; align-items: flex-start; }
+      header { padding: 0 18px; }
+      h1 { font-size: 48px; }
+      .legal { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .ph img { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="notice">Geneva salon · private viewings Thursday and Friday</div>
+  <header>
+    <a class="logo" href="#top">Halden</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#salon">Salon</a>
+      <a href="#houses">Houses</a>
+      <a href="#journal">Journal</a>
+      <a href="#viewing">Viewing</a>
+    </nav>
+    <div class="tools">
+      <span class="clock" id="clock"><b>Geneva</b> <span id="time">—</span></span>
+      <button class="bag-btn" id="open-bag" type="button">Bag <span class="count-n" id="bag-count">0</span></button>
+      <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false">Menu</button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+      <a href="#salon">Salon</a>
+      <a href="#houses">Houses</a>
+      <a href="#journal">Journal</a>
+      <a href="#viewing">Viewing</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="mark" aria-hidden="true"></span>
+        <p class="eyebrow">New to the salon</p>
+        <h1>Yellow gold.<br><em>Tapisserie.</em><br>One owner.</h1>
+        <p class="deck">An Audemars Piguet Royal Oak, acquired privately and checked in Geneva before it was photographed.</p>
+        <p class="facts"><strong>$92,000</strong><span>Yellow gold · With papers · One of one</span></p>
+        <div class="actions">
+          <button class="btn" type="button" data-open="royal-oak">Acquire this piece</button>
+          <a class="btn ghost" href="#salon">All eight watches</a>
+        </div>
+      </div>
+      <figure class="hero-fig">
+        <img src="images/royal-oak.jpg" alt="Yellow gold Audemars Piguet Royal Oak with a tapisserie dial">
+        <figcaption>Studio light. The gold is as it arrived.</figcaption>
+      </figure>
+    </section>
+
+    <div class="houses" id="houses">
+      <button class="house" type="button" data-house="" aria-pressed="true">All houses</button>
+      <button class="house" type="button" data-house="Rolex" aria-pressed="false">Rolex <i>3</i></button>
+      <button class="house" type="button" data-house="Audemars Piguet" aria-pressed="false">Audemars Piguet <i>1</i></button>
+      <button class="house" type="button" data-house="Omega" aria-pressed="false">Omega <i>3</i></button>
+      <button class="house" type="button" data-house="IWC" aria-pressed="false">IWC <i>1</i></button>
+    </div>
+
+    <section class="wrap" id="salon">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">The salon</p>
+          <h2>Now available</h2>
+        </div>
+        <div class="filters" role="group" aria-label="Filter the salon">
+          <button class="filter" type="button" data-facet="all" aria-pressed="true">All</button>
+          <button class="filter" type="button" data-facet="sport" aria-pressed="false">Sport</button>
+          <button class="filter" type="button" data-facet="dress" aria-pressed="false">Dress</button>
+          <button class="filter" type="button" data-facet="gold" aria-pressed="false">Gold</button>
+        </div>
+      </div>
+      <p class="result-line" id="result-line">8 pieces</p>
+      <div class="pieces" id="pieces"></div>
+    </section>
+
+    <section class="principles" aria-label="How a piece is offered">
+      <article>
+        <span class="num">01</span>
+        <h3>Opened in the salon</h3>
+        <p>Case, dial, hands, and bracelet are checked against the reference before a watch is photographed or priced.</p>
+      </article>
+      <article>
+        <span class="num">02</span>
+        <h3>The gaps are written down</h3>
+        <p>A missing paper, an extra link, or a previous polish is stated on the piece. Nothing is left for the buyer to discover.</p>
+      </article>
+      <article>
+        <span class="num">03</span>
+        <h3>Fourteen days, insured</h3>
+        <p>Delivery is fully insured. You have fourteen days to decide, in the condition the watch arrived.</p>
+      </article>
+    </section>
+
+    <section class="essay">
+      <div class="essay-copy">
+        <p class="eyebrow">In the room</p>
+        <h2>Tried on,<br><em>then decided.</em></h2>
+        <p>Photographs are honest, and still not enough. In Geneva the watch can be seen on the wrist, in daylight, with the papers beside it.</p>
+        <p>If you are elsewhere, we do the same thing on a short call — slowly, and without a script.</p>
+        <div class="actions">
+          <a class="btn" href="#viewing">Request a viewing</a>
+        </div>
+      </div>
+      <figure class="essay-fig">
+        <img src="images/wrist.jpg" alt="A rose gold Royal Oak on a rubber strap, worn during a viewing">
+        <figcaption>Rose gold Royal Oak, during a viewing</figcaption>
+      </figure>
+    </section>
+
+    <section class="wrap" id="journal">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">From the desk</p>
+          <h2>Journal</h2>
+        </div>
+      </div>
+      <div class="journal-list" id="journal-list"></div>
+    </section>
+
+    <section class="viewing" id="viewing">
+      <div>
+        <p class="eyebrow">Private viewing</p>
+        <h2>See it before you decide.</h2>
+        <p>Twenty minutes in Geneva, or by video. Tell us which piece, and a specialist writes back within one business day.</p>
+      </div>
+      <form id="view-form">
+        <label for="name">Name</label>
+        <input id="name" name="name" required autocomplete="name">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required autocomplete="email">
+        <label for="piece">Piece</label>
+        <select id="piece" name="piece" required></select>
+        <label for="note">Note</label>
+        <textarea id="note" name="note" placeholder="A day that suits you, or a question about the piece."></textarea>
+        <div class="actions" style="margin-top: 22px;">
+          <button class="btn light" type="submit">Request a time</button>
+        </div>
+      </form>
+      <p class="thanks" id="thanks" hidden>Request received. A specialist will write within one business day.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <div class="logo">Halden</div>
+          <p>Fine watches, privately held. 12 Rue de la Corraterie, 1204 Geneva.</p>
+        </div>
+        <div>
+          <h3>Salon</h3>
+          <a href="#salon">Now available</a>
+          <a href="#houses">Houses</a>
+          <a href="#journal">Journal</a>
+        </div>
+        <div>
+          <h3>Client care</h3>
+          <span>Authentication</span>
+          <span>Insured delivery</span>
+          <span>Fourteen-day returns</span>
+        </div>
+        <div>
+          <h3>Visit</h3>
+          <a href="#viewing">Private viewing</a>
+          <span>Thursday and Friday</span>
+          <span>By appointment</span>
+        </div>
+      </div>
+      <div class="legal">
+        <span>© Halden. Design preview for a Shopify salon.</span>
+        <span>Each watch is one of one.</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay" hidden>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title"></div>
+  </div>
+  <div class="overlay" id="bag-overlay" hidden>
+    <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="bag-title"></aside>
+  </div>
+
+  <script>
+    const pieces = [
+      {
+        id: "portugieser",
+        brand: "IWC",
+        model: "Portugieser",
+        price: 64500,
+        cat: "dress",
+        metal: "steel",
+        image: "images/portugieser.jpg",
+        position: "center 72%",
+        alt: "IWC Portugieser with a white dial and tourbillon, on a brown leather strap",
+        spec: "Tourbillon · 2016 · Full set",
+        one: "One of one",
+        story: "White lacquer dial, calendar indications, and a tourbillon visible at six. Acquired from a private collection with box and papers. The leather strap is the one that arrived with the watch.",
+        facts: [["Year", "2016"], ["Condition", "Excellent"], ["Set", "Full set"], ["Case", "Steel, leather strap"], ["Indication", "Tourbillon, calendar"]]
+      },
+      {
+        id: "royal-oak",
+        brand: "Audemars Piguet",
+        model: "Royal Oak",
+        price: 92000,
+        cat: "sport",
+        metal: "gold",
+        image: "images/royal-oak.jpg",
+        position: "center 42%",
+        alt: "Yellow gold Audemars Piguet Royal Oak with a tapisserie dial",
+        spec: "Yellow gold · 2019 · Full set",
+        one: "One of one",
+        story: "Yellow gold, tapisserie dial, one previous owner. The bracelet is tight and the gold has not been refinished for the photograph. Papers confirm the reference.",
+        facts: [["Year", "2019"], ["Condition", "Excellent, unpolished"], ["Set", "Full set"], ["Case", "Yellow gold"], ["Dial", "Tapisserie, with date"]]
+      },
+      {
+        id: "submariner",
+        brand: "Rolex",
+        model: "Submariner Date",
+        price: 16800,
+        cat: "sport",
+        metal: "gold",
+        image: "images/submariner.jpg",
+        position: "center",
+        alt: "Two-tone Rolex Submariner Date with a black dial and gold bezel",
+        spec: "Two-tone · 2020 · Full set",
+        one: "One of one",
+        story: "Steel and yellow gold, black dial, black bezel with gold numerals. Full set. The gold on the bracelet matches the bezel, with ordinary wear and no aftermarket polish.",
+        facts: [["Year", "2020"], ["Condition", "Excellent"], ["Set", "Full set"], ["Case", "Steel and yellow gold"], ["Bezel", "Black, gold numerals"]]
+      },
+      {
+        id: "seamaster-chrono",
+        brand: "Omega",
+        model: "Seamaster Chronograph",
+        price: 6450,
+        cat: "sport",
+        metal: "steel",
+        image: "images/seamaster-chrono.jpg",
+        position: "center",
+        alt: "Steel Omega Seamaster chronograph with a blue dial",
+        spec: "Steel · 2014 · Papers",
+        one: "One of one",
+        story: "Blue dial, co-axial chronograph, steel bracelet. Papers are present. The box was not with the watch when we acquired it, and it is not implied here.",
+        facts: [["Year", "2014"], ["Condition", "Excellent"], ["Set", "Papers, no box"], ["Case", "Steel"], ["Dial", "Blue, chronograph"]]
+      },
+      {
+        id: "explorer",
+        brand: "Rolex",
+        model: "Explorer",
+        price: 7950,
+        cat: "sport",
+        metal: "steel",
+        image: "images/explorer.jpg",
+        position: "center",
+        alt: "Rolex Explorer with a black dial and steel bracelet",
+        spec: "36 mm · 2022 · Full set",
+        one: "One of one",
+        story: "Black dial with 3, 6 and 9. The steel is unpolished, and the bracelet has the tightness of a watch that was worn rather than stored.",
+        facts: [["Year", "2022"], ["Condition", "Unpolished"], ["Set", "Full set"], ["Case", "Steel, 36 mm"], ["Dial", "Black, 3 6 9"]]
+      },
+      {
+        id: "seamaster",
+        brand: "Omega",
+        model: "Seamaster",
+        price: 5250,
+        cat: "sport",
+        metal: "steel",
+        image: "images/seamaster.jpg",
+        position: "center 60%",
+        alt: "Omega Seamaster with a blue wave dial and blue bezel",
+        spec: "Blue dial · 2012 · Full set",
+        one: "One of one",
+        story: "The wave dial and blue bezel, on a steel bracelet. Full set. A straightforward diver, checked for originality of the bezel, hands, and date wheel.",
+        facts: [["Year", "2012"], ["Condition", "Excellent"], ["Set", "Full set"], ["Case", "Steel"], ["Dial", "Blue wave"]]
+      },
+      {
+        id: "oyster",
+        brand: "Rolex",
+        model: "Oyster Perpetual",
+        price: 6150,
+        cat: "dress",
+        metal: "steel",
+        image: "images/oyster.jpg",
+        position: "center 28%",
+        alt: "Rolex Oyster Perpetual with a black dial, resting on a burgundy book",
+        spec: "Black dial · 2018 · Full set",
+        one: "One of one",
+        story: "A quiet black dial on steel. Light polish is visible on the lugs and is named here, rather than photographed away. Full set.",
+        facts: [["Year", "2018"], ["Condition", "Lightly polished"], ["Set", "Full set"], ["Case", "Steel"], ["Dial", "Black"]]
+      },
+      {
+        id: "planet-ocean",
+        brand: "Omega",
+        model: "Planet Ocean",
+        price: 7400,
+        cat: "sport",
+        metal: "steel",
+        image: "images/planet-ocean.jpg",
+        position: "70% 62%",
+        alt: "Omega Planet Ocean chronograph with a gray dial and orange bezel accent",
+        spec: "Chronograph · 2017 · Watch only",
+        one: "One of one",
+        story: "Gray dial, orange accent on the bezel, steel bracelet. Sold as the watch only — no box and no papers. The price reflects that.",
+        facts: [["Year", "2017"], ["Condition", "Excellent"], ["Set", "Watch only"], ["Case", "Steel"], ["Dial", "Gray, chronograph"]]
+      }
+    ];
+
+    const essays = [
+      {
+        date: "12 Oct",
+        title: "What “full set” is worth saying",
+        lead: "Box, papers, and hangtags, listed one by one.",
+        body: "Full set is not a mood. On Halden it means the box, the papers, and the hangtags that were with the watch when we opened it. If one of those is missing, the piece says so in the first screen, and the price is the price of that set — not of a complete one.\n\nA buyer should be able to repeat the contents of the parcel before it ships."
+      },
+      {
+        date: "2 Oct",
+        title: "Leaving the surfaces alone",
+        lead: "We do not polish a watch to make the photograph easier.",
+        body: "Polish makes a case look new and makes it worth less to the next collector. If a watch has been polished before it reached us, that is written beside the year. If it has not, the photograph keeps the hairlines.\n\nThe studio light is there to show the object, not to finish it."
+      },
+      {
+        date: "18 Sep",
+        title: "A note on condition",
+        lead: "Unworn, excellent, and lightly polished mean specific things.",
+        body: "Unworn means the watch shows no wear on the bracelet or clasp. Excellent means honest wear, with the original surfaces intact. Lightly polished means a previous owner, or a previous shop, has refinished some of the steel or gold.\n\nThe word is on the piece. It is not a surprise in the final paragraph."
+      }
+    ];
+
+    const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+    const bag = [];
+    let facet = "all";
+    let house = "";
+
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+
+    function filtered() {
+      return pieces.filter((p) => {
+        if (house && p.brand !== house) return false;
+        if (facet === "gold" && p.metal !== "gold") return false;
+        if (facet === "sport" && p.cat !== "sport") return false;
+        if (facet === "dress" && p.cat !== "dress") return false;
+        return true;
+      });
+    }
+
+    function renderPieces() {
+      const list = filtered();
+      const unfiltered = facet === "all" && !house;
+      const root = document.getElementById("pieces");
+      const line = document.getElementById("result-line");
+      line.textContent = list.length === 1 ? "1 piece" : list.length + " pieces";
+      if (!list.length) {
+        root.innerHTML = '<p class="empty">Nothing in the salon under that reading. <button class="house" type="button" id="clear-filters">Clear filters</button></p>';
+        document.getElementById("clear-filters").addEventListener("click", () => {
+          facet = "all";
+          house = "";
+          syncFilters();
+          renderPieces();
+        });
+        return;
+      }
+      root.innerHTML = list.map((p, i) => `
+        <article class="piece${unfiltered && i === 0 ? " feature" : ""}">
+          <button class="piece-open" type="button" data-open="${p.id}">
+            <span class="ph"><img src="${p.image}" alt="${esc(p.alt)}" style="object-position:${p.position}"></span>
+            <span class="meta">
+              <span class="brand">${esc(p.brand)}</span>
+              <span class="price">${money.format(p.price)}</span>
+              <span class="model">${esc(p.model)}</span>
+              <span class="spec">${esc(p.spec)}</span>
+            </span>
+          </button>
+        </article>
+      `).join("");
+    }
+
+    function renderJournal() {
+      document.getElementById("journal-list").innerHTML = essays.map((e, i) => `
+        <button class="entry" type="button" data-essay="${i}">
+          <time>${esc(e.date)}</time>
+          <strong>${esc(e.title)}</strong>
+          <em>Read</em>
+        </button>
+      `).join("");
+    }
+
+    function fillSelect(selected) {
+      const select = document.getElementById("piece");
+      select.innerHTML = '<option value="Not sure yet">Not sure yet</option>' + pieces.map((p) =>
+        `<option value="${esc(p.brand + " " + p.model)}"${selected === p.id ? " selected" : ""}>${esc(p.brand + " " + p.model)}</option>`
+      ).join("");
+    }
+
+    function openPiece(id) {
+      const p = pieces.find((item) => item.id === id);
+      if (!p) return;
+      const inBag = bag.some((item) => item.id === id);
+      document.getElementById("sheet").className = "sheet";
+      document.getElementById("sheet").innerHTML = `
+        <button class="close" type="button" data-close="overlay">Close</button>
+        <div class="sheet-photo"><img src="${p.image}" alt="${esc(p.alt)}" style="object-position:${p.position}"></div>
+        <div class="sheet-body">
+          <p class="brand">${esc(p.brand)}</p>
+          <h2 class="model" id="sheet-title">${esc(p.model)}</h2>
+          <p class="one">${esc(p.one)}</p>
+          <p class="price">${money.format(p.price)}</p>
+          <p class="story">${esc(p.story)}</p>
+          <dl>${p.facts.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>
+          <div class="sheet-actions">
+            <button class="btn" type="button" data-add="${p.id}" ${inBag ? "disabled" : ""}>${inBag ? "In your bag" : "Add to bag"}</button>
+            <button class="btn ghost" type="button" data-view="${p.id}">Request a viewing</button>
+          </div>
+        </div>
+      `;
+      show("overlay");
+    }
+
+    function openEssay(index) {
+      const e = essays[index];
+      document.getElementById("sheet").className = "sheet narrow";
+      document.getElementById("sheet").innerHTML = `
+        <button class="close" type="button" data-close="overlay">Close</button>
+        <div class="sheet-body">
+          <p class="eyebrow">${esc(e.date)}</p>
+          <h2 class="model" id="sheet-title">${esc(e.title)}</h2>
+          <p class="story">${esc(e.lead)}</p>
+          ${e.body.split("\n\n").map((para) => `<p>${esc(para)}</p>`).join("")}
+        </div>
+      `;
+      show("overlay");
+    }
+
+    function renderBag() {
+      document.getElementById("bag-count").textContent = bag.length;
+      const total = bag.reduce((sum, p) => sum + p.price, 0);
+      document.getElementById("drawer").innerHTML = `
+        <div class="drawer-head">
+          <h2 id="bag-title">Bag</h2>
+          <button class="close" type="button" data-close="bag-overlay" style="position:static">Close</button>
+        </div>
+        ${bag.length ? `
+          <ul class="bag-list">
+            ${bag.map((p) => `
+              <li class="bag-row">
+                <span><span class="brand">${esc(p.brand)}</span><br><strong>${esc(p.model)}</strong></span>
+                <span>${money.format(p.price)}<br><button type="button" data-remove="${p.id}">Remove</button></span>
+              </li>
+            `).join("")}
+          </ul>
+          <div class="sub"><span>Subtotal</span><span>${money.format(total)}</span></div>
+          <button class="btn" type="button" id="checkout">Checkout</button>
+          <p class="fine" id="checkout-note">Secure checkout through Shopify. Each watch is reserved as a single piece.</p>
+        ` : `<p class="fine">The bag is empty. Pieces in the salon are one of one.</p>`}
+      `;
+    }
+
+    function show(id) {
+      document.getElementById(id).hidden = false;
+      const close = document.querySelector(`#${id} .close`);
+      if (close) close.focus();
+    }
+    function hide(id) { document.getElementById(id).hidden = true; }
+
+    function syncFilters() {
+      document.querySelectorAll(".filter").forEach((btn) => {
+        btn.setAttribute("aria-pressed", String(btn.dataset.facet === facet));
+      });
+      document.querySelectorAll(".house").forEach((btn) => {
+        if (!("house" in btn.dataset)) return;
+        btn.setAttribute("aria-pressed", String(btn.dataset.house === house));
+      });
+    }
+
+    function tick() {
+      const time = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Europe/Zurich",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23"
+      }).format(new Date());
+      document.getElementById("time").textContent = time;
+    }
+
+    document.getElementById("pieces").addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-open]");
+      if (btn) openPiece(btn.dataset.open);
+    });
+    document.getElementById("journal-list").addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-essay]");
+      if (btn) openEssay(btn.dataset.essay);
+    });
+    document.body.addEventListener("click", (event) => {
+      const open = event.target.closest("[data-open]");
+      if (open && open.dataset.open && !open.classList.contains("piece-open")) openPiece(open.dataset.open);
+      const add = event.target.closest("[data-add]");
+      if (add && !bag.some((p) => p.id === add.dataset.add)) {
+        bag.push(pieces.find((p) => p.id === add.dataset.add));
+        renderBag();
+        hide("overlay");
+        show("bag-overlay");
+      }
+      const remove = event.target.closest("[data-remove]");
+      if (remove) {
+        const index = bag.findIndex((p) => p.id === remove.dataset.remove);
+        if (index >= 0) bag.splice(index, 1);
+        renderBag();
+      }
+      const view = event.target.closest("[data-view]");
+      if (view) {
+        fillSelect(view.dataset.view);
+        hide("overlay");
+        document.getElementById("viewing").scrollIntoView({ behavior: "smooth" });
+      }
+      const closer = event.target.closest("[data-close]");
+      if (closer) hide(closer.dataset.close);
+      if (event.target.id === "overlay") hide("overlay");
+      if (event.target.id === "bag-overlay") hide("bag-overlay");
+      if (event.target.id === "checkout") {
+        document.getElementById("checkout-note").textContent = "In the finished shop this opens Shopify Checkout and reserves the piece.";
+      }
+      const facetBtn = event.target.closest(".filter");
+      if (facetBtn) {
+        facet = facetBtn.dataset.facet;
+        syncFilters();
+        renderPieces();
+      }
+      const houseBtn = event.target.closest(".house");
+      if (houseBtn && "house" in houseBtn.dataset) {
+        house = houseBtn.dataset.house;
+        syncFilters();
+        renderPieces();
+        if (house) document.getElementById("salon").scrollIntoView({ behavior: "smooth" });
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        hide("overlay");
+        hide("bag-overlay");
+      }
+    });
+
+    document.getElementById("open-bag").addEventListener("click", () => {
+      renderBag();
+      show("bag-overlay");
+    });
+
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileNav = document.getElementById("mobile-nav");
+    menuBtn.addEventListener("click", () => {
+      const open = mobileNav.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(open));
+    });
+    mobileNav.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        mobileNav.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.getElementById("view-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      event.currentTarget.hidden = true;
+      document.getElementById("thanks").hidden = false;
+    });
+
+    fillSelect();
+    renderPieces();
+    renderJournal();
+    renderBag();
+    tick();
+    setInterval(tick, 30000);
+  </script>
+</body>
+</html>
